@@ -1,6 +1,12 @@
 import pizzaImage from '../assets/pizza.jpeg';
 import hamburguerImage from '../assets/hamburguer.jpeg';
 
+let filteredItems = [];
+
+function filterItens(itensId) {
+  filteredItems = itensId.filter((item) => item.nome === 'Pizza 2');
+  return filteredItems;
+}
 const itens = [
   {
     id: 1,

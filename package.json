@@ -6,7 +6,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "android-React": "react-native run-android",
+    "ios-React": "react-native run-ios"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",
@@ -18,13 +20,12 @@
     "react-native": "0.74.5",
     "react-native-dotenv": "^3.4.11",
     "react-native-paper": "4.9.2",
-    "react-native-web": "~0.19.10",
-    "dotenv": "^16.4.5"
+    "react-native-web": "^0.19.13"
   },
   "devDependencies": {
-    "prettier": "^3.3.3",
+    "@babel/core": "^7.20.0",
     "eslint": "^9.10.0",
-    "@babel/core": "^7.20.0"
+    "prettier": "^3.3.3"
   },
   "private": true
 }
