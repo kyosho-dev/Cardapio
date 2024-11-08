@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Button, StyleSheet, TextInput } from 'react-native';
 
-
 export default class TelaLogin {
-  static Login({username,setUsername,password,setPassword,fazerLogin,}) {
+  static Login({ username, setUsername, password, setPassword, fazerLogin }) {
     return (
       <View style={styles.loginContainer}>
         <TextInput
@@ -24,11 +23,9 @@ export default class TelaLogin {
           <Button title="Login" onPress={fazerLogin} />
         </View>
       </View>
-  );
-
+    );
   }
 }
-
 
 const styles = StyleSheet.create({
   loginContainer: {

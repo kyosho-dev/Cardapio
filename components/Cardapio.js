@@ -1,12 +1,19 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Button, Alert, StyleSheet } from 'react-native';
-
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  Button,
+  Alert,
+  StyleSheet,
+} from 'react-native';
 
 export default class Cardapio {
   // O construtor recebe o nome e a idade como parâmetros
   constructor(name, age) {
-    this.name = name; 
-    this.age = age; 
+    this.name = name;
+    this.age = age;
   }
 
   // Método para retornar as informações da pessoa em formato de string
@@ -24,11 +31,12 @@ export default class Cardapio {
     this.age = newAge; // Atualiza o atributo age com a nova idade
   }
 
-  
-
   // Transforme em um método estático ou mova para um componente separado
   static TelaCardapio({ menuItems, adicionarAoCarrinho, carrinhoItens }) {
-    const totalCarrinho = carrinhoItens.reduce((total, item) => total + item.preco, 0);
+    const totalCarrinho = carrinhoItens.reduce(
+      (total, item) => total + item.preco,
+      0,
+    );
 
     return (
       <View style={styles.container}>
@@ -61,12 +69,7 @@ export default class Cardapio {
       </View>
     );
   }
-
-
-
-
 }
-
 
 const styles = StyleSheet.create({
   container: {
