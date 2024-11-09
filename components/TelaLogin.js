@@ -6,7 +6,7 @@ export default class TelaLogin {
   static Login({ username, setUsername, password, setPassword, fazerLogin }) {
     return (
       <View style={styles.loginContainer}>
-        <Image 
+        <Image
           source={logoImage} // Utiliza a imagem localmente
           style={styles.logo}
         />
@@ -27,9 +27,9 @@ export default class TelaLogin {
           autoCapitalize="none"
         />
         <View style={styles.buttonContainer}>
-          <Button 
-            title="Login" 
-            onPress={fazerLogin} 
+          <Button
+            title="Login"
+            onPress={fazerLogin}
             color="#FF8B38" // Cor do botão de login
           />
         </View>

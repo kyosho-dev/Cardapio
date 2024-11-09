@@ -4,18 +4,28 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "android-React": "react-native run-android",
+    "ios-React": "react-native run-ios"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~3.2.3",
+    "@expo/vector-icons": "^14.0.3",
     "expo": "~51.0.28",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-native": "0.74.5",
-    "@expo/vector-icons": "^14.0.3",
-    "react-native-paper": "4.9.2"
+    "react-native-dotenv": "^3.4.11",
+    "react-native-paper": "4.9.2",
+    "react-native-web": "^0.19.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "eslint": "^9.10.0",
+    "prettier": "^3.3.3"
   },
   "private": true
 }
