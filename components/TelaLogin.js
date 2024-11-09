@@ -1,40 +1,42 @@
 import React from 'react';
 import { View, Button, StyleSheet, TextInput, Image } from 'react-native';
-import logoImage from '../assets/iGordo.jpg';
+import logoImage from '../assets/iGordo.jpeg'; // Substitua pelo nome correto do arquivo de imagem
 
-const TelaLogin = ({ username, setUsername, password, setPassword, fazerLogin }) => {
-  return (
-    <View style={styles.loginContainer}>
-      <Image
-        source={logoImage} // Utiliza a imagem localmente
-        style={styles.logo}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Usuário"
-        placeholderTextColor="#FFFFFFA6" // Cor do placeholder com 65% de transparência
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor="#FFFFFFA6" // Cor do placeholder com 65% de transparência
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        autoCapitalize="none"
-      />
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
-          onPress={fazerLogin}
-          color="#FF8B38" // Cor do botão de login
+export default class TelaLogin {
+  static Login({ username, setUsername, password, setPassword, fazerLogin }) {
+    return (
+      <View style={styles.loginContainer}>
+        <Image
+          source={logoImage} // Utiliza a imagem localmente
+          style={styles.logo}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Usuário"
+          placeholderTextColor="#FFFFFFA6" // Cor do placeholder com 65% de transparência
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#FFFFFFA6" // Cor do placeholder com 65% de transparência
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          autoCapitalize="none"
+        />
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Login"
+            onPress={fazerLogin}
+            color="#FF8B38" // Cor do botão de login
+          />
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   loginContainer: {
@@ -64,5 +66,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-export default TelaLogin;

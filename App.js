@@ -5,9 +5,8 @@ import TelaLogin from './components/TelaLogin.js';
 import itens from './data/itens';
 
 // Importe as imagens locais
-
 export default function App() {
-    const [logado, setLogado] = useState(false);
+    const [logado, setLogado] = useState(true);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [menuItems, setMenuItems] = useState([]);
@@ -17,24 +16,21 @@ export default function App() {
         carregarDados();
     }, []);
 
-    const carregarDados = () => {
-        // Simula a leitura de um arquivo JSON
-        const dadosJSON = {
-            usuarios: [{username: '1', password: '1'}],
-            itens: itens,
-        };
-
-        // Duplica os itens concatenando o array consigo mesmo, usar apenas se for necesario
-        const itensDuplicados = [
-            ...dadosJSON.itens,
-            ...dadosJSON.itens.map((item, index) => ({
-                ...item,
-                id: item.id + dadosJSON.itens.length,
-            })),
-        ];
-
-        setMenuItems(dadosJSON.itens);
-    };
+  //Carrega os dados de um .JSON
+  const carregarDados = async () => {
+  try {
+    const response = await fetch('http://192.168.1.176:5000/carregarDados');
+    if (!response.ok) {
+      throw new Error('Erro ao carregar dados');
+    }
+    const dadosJSON = await response.json();
+    console.log('Dados carregados:', dadosJSON); // Log aqui
+    setMenuItems(dadosJSON.itens);
+  } catch (error) {
+    console.error(error);
+    Alert.alert('Erro', 'Falha ao carregar os dados');
+  }
+};
 
     const fazerLogin = () => {
         // Verifica as credenciais
