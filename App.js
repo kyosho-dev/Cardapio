@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Button, FlatList, Image, StyleSheet, Alert,} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, Alert } from 'react-native';
 import Cardapio from './components/Cardapio';
-import TelaLogin from './components/TelaLogin.js';
+import TelaLogin from './components/TelaLogin';
 import itens from './data/itens';
 
-// Importe as imagens locais
 export default function App() {
-    const [logado, setLogado] = useState(true);
+    const [logado, setLogado] = useState(false); // Inicialmente definido como false
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [menuItems, setMenuItems] = useState([]);
@@ -16,24 +15,31 @@ export default function App() {
         carregarDados();
     }, []);
 
-  //Carrega os dados de um .JSON
-  const carregarDados = async () => {
-  try {
-    const response = await fetch('http://192.168.1.176:5000/carregarDados');
-    if (!response.ok) {
-      throw new Error('Erro ao carregar dados');
-    }
-    const dadosJSON = await response.json();
-    console.log('Dados carregados:', dadosJSON); // Log aqui
-    setMenuItems(dadosJSON.itens);
-  } catch (error) {
-    console.error(error);
-    Alert.alert('Erro', 'Falha ao carregar os dados');
-  }
-};
+    const useLocal = 1;
+
+    const carregarDados = () => {
+        if (useLocal !== 1) {
+            fetch('http://192.168.1.176:5000/carregarDados')
+                .then(response => response.json())
+                .then(dadosJSON => {
+                    console.log('Dados carregados:', dadosJSON);
+                    setMenuItems(dadosJSON.itens);
+                })
+                .catch(error => {
+                    console.error(error);
+                    Alert.alert('Erro', 'Falha ao carregar os dados');
+                });
+        } else {
+            const dadosJSON = {
+                usuarios: [{ username: '1', password: '1' }],
+                itens: itens,
+            };
+
+            setMenuItems(dadosJSON.itens);
+        }
+    };
 
     const fazerLogin = () => {
-        // Verifica as credenciais
         if (username === '1' && password === '1') {
             setLogado(true);
         } else {
@@ -46,13 +52,13 @@ export default function App() {
     };
 
     return logado ? (
-        <Cardapio.TelaCardapio
+        <Cardapio
             menuItems={menuItems}
             adicionarAoCarrinho={adicionarAoCarrinho}
             carrinhoItens={carrinhoItens}
         />
     ) : (
-        <TelaLogin
+        <TelaLogin.Login
             username={username}
             setUsername={setUsername}
             password={password}
