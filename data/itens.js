@@ -13,7 +13,7 @@ const itens = [
         nome: 'O Tradicional',
         descricao: 'Hambúrguer clássico com queijo, bacon, alface, tomate e molho especial.',
         preco: 35.9,
-        imagem: "https://images.pexels.com/photos/1639565/pexels-photo-1639565.jpeg",
+        imagem: "https://images.pexels.com/photos/19247565/pexels-photo-19247565/free-photo-of-comida-alimento-refeicao-comida-rapida.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
         id: 2,
@@ -41,7 +41,7 @@ const itens = [
         nome: 'Trufado Premium',
         descricao: 'Carne bovina com queijo gruyè, cebola caramelizada, bacon e azeite trufado',
         preco: 35.9,
-        imagem: "https://www.sabornamesa.com.br/media/k2/items/cache/b5081aa54ad470ff4039ef00a5cbf9d3_XL.jpg",
+        imagem: "https://images.pexels.com/photos/18713424/pexels-photo-18713424/free-photo-of-refeicao-comida-carne-comida-rapida.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
         id: 6,

@@ -11,6 +11,8 @@
     "ios-React": "react-native run-ios"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.2.3",
+    "@expo-google-fonts/roboto": "^0.2.3",
     "@expo/metro-runtime": "~3.2.3",
     "@expo/vector-icons": "^14.0.3",
     "expo": "~51.0.28",
