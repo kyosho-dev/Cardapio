@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import Cardapio from './components/Cardapio';
 import TelaLogin from './components/TelaLogin';
+import TelaPagamento from './components/TelaPagamento';
 import itens from './data/itens';
 
 export default function App() {
-    const [logado, setLogado] = useState(false); // Inicialmente definido como false
+    const [logado, setLogado] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [menuItems, setMenuItems] = useState([]);
     const [carrinhoItens, setCarrinhoItens] = useState([]);
+    const [telaAtual, setTelaAtual] = useState('TelaLogin');
 
     useEffect(() => {
         carregarDados();
     }, []);
+
+    const fazerPedido = () => {
+        setTelaAtual('TelaPagamento');
+    };
 
     const useLocal = 1;
 
@@ -42,6 +48,7 @@ export default function App() {
     const fazerLogin = () => {
         if (username === '1' && password === '1') {
             setLogado(true);
+            setTelaAtual('Cardapio');
         } else {
             Alert.alert('Erro', 'Credenciais inválidas');
         }
@@ -51,19 +58,28 @@ export default function App() {
         setCarrinhoItens([...carrinhoItens, item]);
     };
 
-    return logado ? (
-        <Cardapio
-            menuItems={menuItems}
-            adicionarAoCarrinho={adicionarAoCarrinho}
-            carrinhoItens={carrinhoItens}
-        />
-    ) : (
-        <TelaLogin.Login
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            fazerLogin={fazerLogin}
-        />
+    return (
+        <View style={{ flex: 1 }}>
+            {telaAtual === 'TelaLogin' && (
+                <TelaLogin.Login
+                    username={username}
+                    setUsername={setUsername}
+                    password={password}
+                    setPassword={setPassword}
+                    fazerLogin={fazerLogin}
+                />
+            )}
+            {telaAtual === 'Cardapio' && (
+                <Cardapio
+                    menuItems={menuItems}
+                    adicionarAoCarrinho={adicionarAoCarrinho}
+                    carrinhoItens={carrinhoItens}
+                    fazerPedido={fazerPedido}
+                />
+            )}
+            {telaAtual === 'TelaPagamento' && (
+                <TelaPagamento carrinhoItens={carrinhoItens} />
+            )}
+        </View>
     );
 }
