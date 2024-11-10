@@ -1,6 +1,6 @@
 // components/TelaPagamento.js
 import React from 'react';
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import {View, Text, Button, FlatList, StyleSheet, Alert} from 'react-native';
 
 export default function TelaPagamento({ carrinhoItens, concluirPedido }) {
     const total = carrinhoItens.reduce((acc, item) => acc + item.preco, 0);
@@ -20,7 +20,7 @@ export default function TelaPagamento({ carrinhoItens, concluirPedido }) {
             />
 
             <Text style={styles.total}>Total: R$ {total.toFixed(2)}</Text>
-            <Button title="Concluir Pedido" onPress={concluirPedido} />
+            <Button title="Concluir Pedido" onPress={() => Alert.alert('Pedido realizado!')} />
         </View>
     );
 }
