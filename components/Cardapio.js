@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     titulo: {
         fontFamily: 'Roboto_700Bold',
         fontSize: 24,
-        color: '#FFF',
+        color: '#F5F5F5',
         textAlign: 'center',
         marginBottom: 20,
         marginTop: 10,
