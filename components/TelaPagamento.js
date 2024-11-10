@@ -1,21 +1,95 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Alert } from 'react-native';
 
-const TelaPagamento = ({ carrinhoItens }) => {
+
+const TelaPagamento = () => {
+    // Estado do carrinho e dos detalhes do pedido
+    const [carrinhoItens, setCarrinhoItens] = useState([
+        { id: 1, nome: 'Hambúrguer', preco: 15.00 },
+        { id: 2, nome: 'Pizza', preco: 25.00 },
+        { id: 3, nome: 'Refrigerante', preco: 5.00 }
+    ]);
+
+    const [formaPagamento, setFormaPagamento] = useState('Cartão de Crédito');
+    const [endereco, setEndereco] = useState('');
+
+    // Função para calcular o total
+    const total = carrinhoItens.reduce((acc, item) => acc + item.preco, 0);
+
+    // Função para remover item do carrinho
+    const handleRemoverItem = (id) => {
+        setCarrinhoItens((prevItens) => prevItens.filter((item) => item.id !== id));
+    };
+
+    const handleConcluirPedido = () => {
+        console.log('Função chamada');
+        if (endereco) {
+            Alert.alert(
+                'Pedido Confirmado',
+                'Seu pedido foi recebido e está sendo preparado!',
+                [{ text: 'OK', onPress: () => setCarrinhoItens([]) }]
+            );
+        } else {
+            Alert.alert('Erro', 'Por favor, adicione um endereço.');
+        }
+    };
+
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titulo}>Tela de Pagamento</Text>
+            <Text style={styles.titulo}>Resumo do Pedido</Text>
+
             <FlatList
                 data={carrinhoItens}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.item}>
-                        <Text>{item.nome}</Text>
-                        <Text>R$ {item.preco.toFixed(2)}</Text>
+                        <View>
+                            <Text style={styles.itemNome}>{item.nome}</Text>
+                            {/* Descrição do produto (em branco) */}
+                            <Text style={styles.itemDescricao}>Descrição do produto</Text>
+                            <Text style={styles.itemPreco}>R$ {item.preco.toFixed(2)}</Text>
+                        </View>
+                        <TouchableOpacity onPress={() => handleRemoverItem(item.id)}>
+                            <Text style={styles.remover}>Remover</Text>
+                        </TouchableOpacity>
                     </View>
                 )}
+                ListEmptyComponent={<Text style={styles.emptyMessage}>Seu carrinho está vazio.</Text>}
             />
+
+            <View style={styles.secao}>
+                <Text style={styles.label}>Total: R$ {total.toFixed(2)}</Text>
+            </View>
+
+            <View style={styles.secao}>
+                <Text style={styles.label}>Endereço de Entrega</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Digite o endereço"
+                    placeholderTextColor="#B0B0B0"
+                    value={endereco}
+                    onChangeText={setEndereco}
+                />
+            </View>
+
+            <View style={styles.secao}>
+                <Text style={styles.label}>Forma de Pagamento</Text>
+                {/* Botões de escolha de forma de pagamento */}
+                <TouchableOpacity onPress={() => setFormaPagamento('Cartão de Crédito')} style={styles.botaoPagamento}>
+                    <Text style={[styles.opcao, formaPagamento === 'Cartão de Crédito' && styles.opcaoSelecionada]}>Cartão de Crédito</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setFormaPagamento('Pix')} style={styles.botaoPagamento}>
+                    <Text style={[styles.opcao, formaPagamento === 'Pix' && styles.opcaoSelecionada]}>Pix</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setFormaPagamento('Dinheiro')} style={styles.botaoPagamento}>
+                    <Text style={[styles.opcao, formaPagamento === 'Dinheiro' && styles.opcaoSelecionada]}>Dinheiro</Text>
+                </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={styles.botaoConcluir} onPress={handleConcluirPedido}>
+                <Text style={styles.textoBotao}>Concluir Pedido</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -23,18 +97,90 @@ const TelaPagamento = ({ carrinhoItens }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#0B192C',
+        paddingHorizontal: 20,
     },
     titulo: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 20,
+        color: '#FFFFFF',
+        textAlign: 'center',
+        marginVertical: 20,
     },
     item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        marginVertical: 5,
+    },
+    itemNome: {
+        fontSize: 18,
+        color: '#FFFFFF',
+    },
+    itemDescricao: {
+        fontSize: 14,
+        color: '#000000',
+        marginVertical: 5,
+    },
+    itemPreco: {
+        fontSize: 16,
+        color: '#FF6500',
+        marginTop: 5,
+    },
+    remover: {
+        color: '#FF6500',
+        fontWeight: 'bold',
+    },
+    secao: {
+        marginVertical: 15,
+    },
+    label: {
+        fontSize: 16,
+        color: '#FFFFFF',
+        marginBottom: 10,
+    },
+    input: {
+        backgroundColor: '#FFFFFF',
+        color: '#FFFFFF',
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#CCCCCC',
+        borderRadius: 10,
+    },
+    botaoPagamento: {
+        backgroundColor: '#FFFFFF',
+        padding: 10,
+        borderRadius: 10,
+        marginVertical: 5,
+    },
+    opcao: {
+        fontSize: 16,
+        color: '#000000',
+        textAlign: 'center',
+    },
+    opcaoSelecionada: {
+        color: '#FF6500',
+        fontWeight: 'bold',
+    },
+    botaoConcluir: {
+        backgroundColor: '#FF6500',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 20,
+    },
+    textoBotao: {
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    emptyMessage: {
+        textAlign: 'center',
+        color: '#FFFFFF',
+        marginVertical: 20,
+        fontSize: 16,
     },
 });
 
