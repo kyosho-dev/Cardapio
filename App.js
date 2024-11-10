@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Alert } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Alert} from 'react-native';
 import Cardapio from './components/Cardapio';
 import TelaLogin from './components/TelaLogin';
 import TelaPagamento from './components/TelaPagamento';
@@ -12,6 +12,7 @@ export default function App() {
     const [menuItems, setMenuItems] = useState([]);
     const [carrinhoItens, setCarrinhoItens] = useState([]);
     const [telaAtual, setTelaAtual] = useState('TelaLogin');
+    const [pedido, setPedido] = useState(null);
 
     useEffect(() => {
         carregarDados();
@@ -58,8 +59,15 @@ export default function App() {
         setCarrinhoItens([...carrinhoItens, item]);
     };
 
+    const handlePedidoConcluido = (pedido) => {
+        setPedido(pedido);
+        setCarrinhoItens([]);
+        setTelaAtual('Cardapio');
+        setPedido(null);
+    };
+
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
             {telaAtual === 'TelaLogin' && (
                 <TelaLogin.Login
                     username={username}
@@ -78,7 +86,10 @@ export default function App() {
                 />
             )}
             {telaAtual === 'TelaPagamento' && (
-                <TelaPagamento carrinhoItens={carrinhoItens} />
+                <TelaPagamento
+                    carrinhoItens={carrinhoItens}
+                    onPedidoConcluido={handlePedidoConcluido}
+                />
             )}
         </View>
     );

@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Alert } from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Alert, Platform} from 'react-native';
 
 
-const TelaPagamento = () => {
+const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido }) => {
     // Estado do carrinho e dos detalhes do pedido
-    const [carrinhoItens, setCarrinhoItens] = useState([
-        { id: 1, nome: 'Hambúrguer', preco: 15.00 },
-        { id: 2, nome: 'Pizza', preco: 25.00 },
-        { id: 3, nome: 'Refrigerante', preco: 5.00 }
-    ]);
-
+    const [carrinhoItens, setCarrinhoItens] = useState(initialCarrinhoItens);
     const [formaPagamento, setFormaPagamento] = useState('Cartão de Crédito');
     const [endereco, setEndereco] = useState('');
 
-    // Função para calcular o total
     const total = carrinhoItens.reduce((acc, item) => acc + item.preco, 0);
 
     // Função para remover item do carrinho
@@ -22,13 +16,21 @@ const TelaPagamento = () => {
     };
 
     const handleConcluirPedido = () => {
-        console.log('Função chamada');
         if (endereco) {
-            Alert.alert(
-                'Pedido Confirmado',
-                'Seu pedido foi recebido e está sendo preparado!',
-                [{ text: 'OK', onPress: () => setCarrinhoItens([]) }]
-            );
+            console.log('Função chamada');
+
+            if (Platform.OS === 'web') {
+                alert('Pedido Confirmado\nSeu pedido foi recebido e está sendo preparado!');
+            } else {
+                Alert.alert(
+                    'Pedido Confirmado',
+                    'Seu pedido foi recebido e está sendo preparado!',
+                    [{ text: 'OK', onPress: () => setCarrinhoItens([]) }]
+                );
+            }
+
+            setCarrinhoItens([]);
+            onPedidoConcluido({ carrinhoItens, formaPagamento, endereco, total });
         } else {
             Alert.alert('Erro', 'Por favor, adicione um endereço.');
         }
@@ -140,12 +142,12 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 16,
-        color: '#FFFFFF',
+        color: '#ffffff',
         marginBottom: 10,
     },
     input: {
         backgroundColor: '#FFFFFF',
-        color: '#FFFFFF',
+        color: '#000000',
         padding: 10,
         borderRadius: 10,
     },
