@@ -1,39 +1,39 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Button, Alert, StyleSheet, Pressable } from 'react-native';
+import { View, Text, FlatList, Image, Alert, StyleSheet, Pressable } from 'react-native';
 
 const Cardapio = ({ menuItems, adicionarAoCarrinho, carrinhoItens }) => {
   const totalCarrinho = carrinhoItens.reduce((total, item) => total + item.preco, 0);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Cardápio</Text>
-      <FlatList
-        data={menuItems}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <Pressable style={styles.itemMenu} onPress={() => adicionarAoCarrinho(item)}>
-            <Image source={{ uri: item.imagem }} style={styles.imagem} />
-            <View style={styles.infoItem}>
-              <Text style={styles.nomeItem}>{item.nome}</Text>
-              <Text>{item.descricao}</Text>
-              <Text>R$ {item.preco.toFixed(2)}</Text>
-              <Button
-                style={styles.button}
-                title="Adicionar ao Carrinho"
-                onPress={() => adicionarAoCarrinho(item)}
-                color="#000000"
-              />
-            </View>
+      <View style={styles.container}>
+        <Text style={styles.titulo}>Cardápio</Text>
+        <FlatList
+            data={menuItems}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+                <Pressable style={styles.itemMenu} onPress={() => adicionarAoCarrinho(item)}>
+                  <Image source={{ uri: item.imagem }} style={styles.imagem} />
+                  <View style={styles.infoItem}>
+                    <Text style={styles.nomeItem}>{item.nome}</Text>
+                    <Text>{item.descricao}</Text>
+                    <Text>R$ {item.preco.toFixed(2)}</Text>
+                    <Pressable
+                        style={styles.addButton}
+                        onPress={() => adicionarAoCarrinho(item)}
+                    >
+                      <Text style={styles.addButtonText}>Adicionar ao Carrinho</Text>
+                    </Pressable>
+                  </View>
+                </Pressable>
+            )}
+        />
+        <View style={styles.carrinho}>
+          <Text>Total do Carrinho: R$ {totalCarrinho.toFixed(2)}</Text>
+          <Pressable style={styles.button} onPress={() => Alert.alert('Pedido realizado!')}>
+            <Text style={styles.text}>FAZER PEDIDO</Text>
           </Pressable>
-        )}
-      />
-      <View style={styles.carrinho}>
-        <Text>Total do Carrinho: R$ {totalCarrinho.toFixed(2)}</Text>
-        <Pressable style={styles.button} onPress={() => Alert.alert('Pedido realizado!')}>
-          <Text style={styles.text}>FAZER PEDIDO</Text>
-        </Pressable>
+        </View>
       </View>
-    </View>
   );
 };
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#B43F3F',
+    backgroundColor: '#FF6500',
   },
   titulo: {
     alignItems: 'center',
@@ -56,12 +56,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
+    padding: 10,
+    alignItems: "center",
   },
   imagem: {
     width: 80,
     height: 80,
     marginRight: 15,
-    borderRadius: 50,
+    borderRadius: 30,
   },
   infoItem: {
     flex: 1,
@@ -84,7 +86,19 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingVertical: 1,
     paddingHorizontal: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#1E3E62',
+  },
+  addButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: '#1E3E62',
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   text: {
     fontSize: 16,
