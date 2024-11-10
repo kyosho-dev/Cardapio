@@ -29,7 +29,7 @@ const Cardapio = ({ menuItems, adicionarAoCarrinho, carrinhoItens }) => {
       />
       <View style={styles.carrinho}>
         <Text>Total do Carrinho: R$ {totalCarrinho.toFixed(2)}</Text>
-        <Pressable style={styles.button} onPress={() => //todo: mandar para a tela de pagamento, com os items do carrigos selecionados que no caso é esse carrinhoItens}>
+        <Pressable style={styles.button} onPress={() => {/* todo: mandar para a tela de pagamento, com os items do carrigos selecionados que no caso é esse carrinhoItens */}}>
           <Text style={styles.text}>FAZER PEDIDO</Text>
         </Pressable>
       </View>
