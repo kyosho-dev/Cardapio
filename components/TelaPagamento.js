@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import {View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Alert, Platform} from 'react-native';
+import React, {useState} from 'react';
+import {View, Image, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Alert, Platform} from 'react-native';
 
-const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido, onVoltar }) => {
+const TelaPagamento = ({carrinhoItens: initialCarrinhoItens, onPedidoConcluido, onVoltar}) => {
     // Estado do carrinho e dos detalhes do pedido
     const [carrinhoItens, setCarrinhoItens] = useState(initialCarrinhoItens);
     const [formaPagamento, setFormaPagamento] = useState('Cartão de Crédito');
@@ -16,7 +16,6 @@ const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido,
 
     const handleConcluirPedido = () => {
         if (endereco) {
-            console.log('Função chamada');
 
             if (Platform.OS === 'web') {
                 alert('Pedido Confirmado\nSeu pedido foi recebido e está sendo preparado!');
@@ -24,12 +23,12 @@ const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido,
                 Alert.alert(
                     'Pedido Confirmado',
                     'Seu pedido foi recebido e está sendo preparado!',
-                    [{ text: 'OK', onPress: () => setCarrinhoItens([]) }]
+                    [{text: 'OK', onPress: () => setCarrinhoItens([])}]
                 );
             }
 
             setCarrinhoItens([]);
-            onPedidoConcluido({ carrinhoItens, formaPagamento, endereco, total });
+            onPedidoConcluido({carrinhoItens, formaPagamento, endereco, total});
         } else {
             Alert.alert('Erro', 'Por favor, adicione um endereço.');
         }
@@ -47,12 +46,14 @@ const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido,
             <FlatList
                 data={carrinhoItens}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <View style={styles.item}>
+                        <Image source={{uri: item.imagem}} style={styles.imagem}/>
+
                         <View>
                             <Text style={styles.itemNome}>{item.nome}</Text>
                             {/* Descrição do produto (em branco) */}
-                            <Text style={styles.itemDescricao}>Descrição do produto</Text>
+                            <Text style={styles.itemDescricao}>{item.descricao}</Text>
                             <Text style={styles.itemPreco}>R$ {item.preco.toFixed(2)}</Text>
                         </View>
                         <TouchableOpacity onPress={() => handleRemoverItem(item.id)}>
@@ -154,6 +155,12 @@ const styles = StyleSheet.create({
     },
     secao: {
         marginVertical: 15,
+    },
+    imagem: {
+        width: 80,
+        height: 80,
+        marginRight: 10,
+        borderRadius: 10,
     },
     label: {
         fontSize: 16,
