@@ -89,6 +89,7 @@ export default function App() {
                 <TelaPagamento
                     carrinhoItens={carrinhoItens}
                     onPedidoConcluido={handlePedidoConcluido}
+                    onVoltar={() => setTelaAtual('Cardapio')} // Adicionamos esta linha
                 />
             )}
         </View>

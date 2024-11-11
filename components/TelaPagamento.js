@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Alert, Platform} from 'react-native';
 
-
-const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido }) => {
+const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido, onVoltar }) => {
     // Estado do carrinho e dos detalhes do pedido
     const [carrinhoItens, setCarrinhoItens] = useState(initialCarrinhoItens);
     const [formaPagamento, setFormaPagamento] = useState('Cartão de Crédito');
@@ -36,9 +35,13 @@ const TelaPagamento = ({ carrinhoItens: initialCarrinhoItens, onPedidoConcluido 
         }
     };
 
-
     return (
         <View style={styles.container}>
+            {/* Botão de voltar */}
+            <TouchableOpacity style={styles.backButton} onPress={onVoltar}>
+                <Text style={styles.backButtonText}>Voltar</Text>
+            </TouchableOpacity>
+
             <Text style={styles.titulo}>Resumo do Pedido</Text>
 
             <FlatList
@@ -102,6 +105,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#0B192C',
         paddingHorizontal: 20,
     },
+    backButton: {
+        marginTop: 40,
+        padding: 10,
+        backgroundColor: '#FF6500',
+        borderRadius: 10,
+        alignSelf: 'flex-start',
+    },
+    backButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
     titulo: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -121,7 +136,7 @@ const styles = StyleSheet.create({
     },
     itemNome: {
         fontSize: 18,
-        color: '#FFFFFF',
+        color: '#000000',
     },
     itemDescricao: {
         fontSize: 14,
